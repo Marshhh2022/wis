@@ -1,5 +1,3 @@
-basta un haha
-<?php...?>
-<?...?>
-
-//ganito
+<?php
+echo "Hello PHP!!!!!";
+?>
