@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="index.css">
-    <title>CourseRecord</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+
+    <title>Course Records</title>
 </head>
 <body>
-    <ul class="navigation-bar">
-        <li><a href="Student_record.php">StudentRecord</a></li>
-        <li><a href="Course_Record.php">Course</a></li>
-        <li><a href="Instructor_Record.php">Instructor</a></li>
-        <li><a href="Enrollment_Record.php">Enrollment</a></li>
-    </ul>
+<ul class="navigation-bar">
+    <li><a href="Student_Records.php">Student</a></li>
+    <li><a href="Course_Records.php">Course</a></li>
+    <li><a href="Instructor_Records.php">Instructor</a></li>
+    <li><a href="Enrollment_Records.php">Enrollment</a></li>
+</ul>
     <div class="status">
         <?php // Check if the query was successful
         $servername = "localhost";
@@ -22,29 +24,8 @@
 
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Status:  Connection failed: " . $conn->connect_error);
-        }
-        echo "Server Status: Connected successfully";
         ?>
     </div>
-
-    <div class="card-style">
-        <h1>Add Course</h1>
-        <table style="width:40%">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-                <tr><td><label for="fname">Course Name:</label></td>
-                <td><input type="text" name="coursename" id="coursename" value=""></td></tr>
-                <tr><td><label for="fname">Credits:</label></td> 
-                <td><input type="text" name="coursecredits" id="coursecredits" value=""></td></tr>
-                <tr><td></td><td><input type="submit" value="Add Course" name="addcourse"></td></tr>
-            </form>
-        </table>
-    </div>
-
-
     <div class="card-style">
         <h1>Course Records</h1>
         <?php 
@@ -150,13 +131,19 @@
             // Display input fields with fetched student information
             ?>
             <table style="width:40%">
-            <form method="POST" action="Course_Record.php">
+            <form method="POST" action="Course_Records.php">
             <input type="hidden" name="ecourse_id" value="<?php echo $editstudent['CourseID']; ?>">
-            <tr><td>Course Name:</td>
-             <td><input type="text" name="efirstname" value="<?php echo $editstudent['CourseName']; ?>"></td></tr>
-             <tr><td>Last Name:</td>
-             <td><input type="text" name="elastname" value="<?php echo $editstudent['Credits']; ?>"></td></tr>
-             <tr><td></td><td><input type="submit" value="Update"></td></tr>
+            <tr>
+                <td>Course Name:</td>
+                <td>Last Name:</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="efirstname" value="<?php echo $editstudent['CourseName']; ?>"></td>
+                <td><input type="text" name="elastname" value="<?php echo $editstudent['Credits']; ?>"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Update"></td>
+            </tr>
             </form>
             </table>
             <?php
@@ -181,6 +168,41 @@
     }
 
     ?>
+    </div>
+
+    <div class="card-style">
+        <h1>Add Course</h1>
+        <table style="width:40%">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+                <tr><td><label for="fname">Course Name:</label></td>
+                <td><input type="text" name="coursename" id="coursename" value=""></td></tr>
+                <tr><td><label for="fname">Credits:</label></td> 
+                <td><input type="text" name="coursecredits" id="coursecredits" value=""></td></tr>
+                <tr><td></td><td><input type="submit" value="Add Course" name="addcourse"></td></tr>
+            </form>
+        </table>
+    </div>
+
+
+   
+
+       
+    <div class="status">
+        <?php 
+        // Check if the query was successful
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "studentrecord";
+
+        // Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Status:  Connection failed: " . $conn->connect_error);
+        }
+        echo "Server Status: Connected successfully";
+        ?>
     </div>
 </body>
 </html>

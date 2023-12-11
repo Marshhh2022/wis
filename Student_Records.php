@@ -5,17 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
-    <title>StudentRecord</title>
+    <title>Student Records</title>
 </head>
 <body>
-    <ul class="navigation-bar">
-        <li><a href="Student_record.php">StudentRecord</a></li>
-        <li><a href="Course_Record.php">Course</a></li>
-        <li><a href="Instructor_Record.php">Instructor</a></li>
-        <li><a href="Enrollment_Record.php">Enrollment</a></li>
-    </ul>
-    <div class="status">
-        <?php // Check if the query was successful
+<div class="status">
+    <?php // Check if the query was successful
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -23,68 +17,20 @@
 
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Status:  Connection failed: " . $conn->connect_error);
-        }
-        echo "Server Status: Connected successfully";
         ?>
-    </div>
-    
 
-    <div class="card-style">
-    <h1>Add Student Record</h1>
-    <table style="width:40%">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-            <tr><td><label for="fname">First name:</label></td>
-            <td><input type="text" name="studentFname" id="studentFname" value=""></td></tr>
-            <tr><td><label for="fname">Last name:</label></td>
-            <td><input type="text" name="studentLname" id="studentLname" value=""></td></tr>
-            <tr><td><label for="fname">Date of Birth</label></td>
-            <td><input type="text" name="studentDOB" id="studentDOB" value=""></td></tr>
-            <tr><td><label for="fname">Email:</label></td>
-            <td><input type="text" name="studentEmail" id="studentEmail" value=""></td></tr>
-            <tr><td><label for="fname">Phone:</label></td>
-            <td><input type="text" name="studentPhone" id="studentPhone" value=""></td></tr>   
-            <tr><td></td><td><input type="submit" value="submit" name="addstudent"></td></tr>
-        </form>
-    </table>
-    </div>
-    <?php 
+</div>
 
-    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addstudent']))
-    {
-        try{
-            $studenfname = $_POST['studentFname'];
-            $studentlname = $_POST['studentLname'];
-            $studentDOB = $_POST['studentDOB'];
-            $studentemail = $_POST['studentEmail'];
-            $studentphone = (int)$_POST['studentPhone'];
-            $studentsql = "INSERT INTO student (FirstName,LastName,DateOfBirth,Email,Phone) 
-                                    VALUES(
-                                    '$studenfname',
-                                    '$studentlname',
-                                    '$studentDOB',
-                                    '$studentemail',
-                                    $studentphone)";
-            //$studentrecord = $conn->exec($studentsql);
-            //echo  gettype($studenfname);	
 
-            if (mysqli_query($conn, $studentsql)) {
-                echo "New record created successfully";
-            } else {
-                echo "<br>Error: " . $studentsql . "<br>" . mysqli_error($conn);
-            }
-        }catch(PDOException $e) {
-            echo $studentrecord . "<br>" . $e->getMessage();
-        }
-        
-        
-    }?>
+<ul class="navigation-bar">
+    <li><a href="Student_Records.php">Student</a></li>
+    <li><a href="Course_Records.php">Course</a></li>
+    <li><a href="Instructor_Records.php">Instructor</a></li>
+    <li><a href="Enrollment_Records.php">Enrollment</a></li>
+</ul>
 
-    <div class="card-style">
-        <h1>Students Records</h1>
+<div class="card-style">
+    <h1>Students Records</h1>
         <table style="width:100%">
         <tr>
             <th>Student ID</th>
@@ -119,7 +65,7 @@
             echo "Error: " . $sql . "<br>" . $conn->error;
         }?>
         </table>
-    </div>
+</div>
     <?php
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteButton'])) {
                 $idToDelete = $_POST['deleteButton'];;
@@ -143,7 +89,7 @@
         }
     ?>
 
-    <div class="card-style">
+<div class="card-style">
         <?php 
         $selecteditsql = "SELECT StudentID, FirstName, LastName, Email  FROM student";
         $result = $conn->query($selecteditsql);
@@ -176,7 +122,7 @@
             // Display input fields with fetched student information
             ?>
             <table style="width:40%">
-            <form method="POST" action="Student_Record.php">
+            <form method="POST" action="Student_Records.php">
             <input type="hidden" name="estudent_id" value="<?php echo $editstudent['StudentID']; ?>">
             <tr><td>First Name:</td>
              <td><input type="text" name="efirstname" value="<?php echo $editstudent['FirstName']; ?>"></td></tr>
@@ -216,7 +162,84 @@
 
     ?>
     </div>
-    
+
+<div class="card-style">
+<h1>Add Student Record</h1>
+    <table style="width:40%">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+            <tr>
+                <td><label for="fname">First name:</label></td>
+                <td><label for="fname">Last name:</label></td>
+                <td><label for="fname">Date of Birth</label></td>
+                <td><label for="fname">Email:</label></td>
+                <td><label for="fname">Phone:</label></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="studentFname" id="studentFname" value=""></td>
+                <td><input type="text" name="studentLname" id="studentLname" value=""></td>
+                <td><input type="text" name="studentDOB" id="studentDOB" value=""></td>
+                <td><input type="text" name="studentEmail" id="studentEmail" value=""></td>
+                <td><input type="text" name="studentPhone" id="studentPhone" value=""></td>
+            </tr>
+           <tr><td><input type="submit" value="submit" name="addstudent"></td></tr>
+        </form>
+    </table>
+    <!-- <input type="submit" value="submit" name="addstudent"> -->
+    </div>
+
+    <?php 
+
+    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addstudent']))
+    {
+        try{
+            $studenfname = $_POST['studentFname'];
+            $studentlname = $_POST['studentLname'];
+            $studentDOB = $_POST['studentDOB'];
+            $studentemail = $_POST['studentEmail'];
+            $studentphone = (int)$_POST['studentPhone'];
+            $studentsql = "INSERT INTO student (FirstName,LastName,DateOfBirth,Email,Phone) 
+                                    VALUES(
+                                    '$studenfname',
+                                    '$studentlname',
+                                    '$studentDOB',
+                                    '$studentemail',
+                                    $studentphone)";
+            //$studentrecord = $conn->exec($studentsql);
+            //echo  gettype($studenfname);	
+
+            if (mysqli_query($conn, $studentsql)) {
+                echo "New record created successfully";
+            } else {
+                echo "<br>Error: " . $studentsql . "<br>" . mysqli_error($conn);
+            }
+        }catch(PDOException $e) {
+            echo $studentrecord . "<br>" . $e->getMessage();
+        }
+        
+        
+    }?>
+
+   
+</div>
+
+<div class="status">
+    <?php // Check if the query was successful
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "studentrecord";
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Status:  Connection failed: " . $conn->connect_error);
+        }
+        echo "Server Status: Connected successfully";
+        ?>
+
+</div>
+
 </body>
 </html>
-

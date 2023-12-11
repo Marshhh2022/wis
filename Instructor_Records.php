@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="index.css">
-    <title>InstructorRecord</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+
+    <title>Instructor Records</title>
 </head>
 <body>
-    <ul class="navigation-bar">
-        <li><a href="Student_record.php">StudentRecord</a></li>
-        <li><a href="Course_Record.php">Course</a></li>
-        <li><a href="Instructor_Record.php">Instructor</a></li>
-        <li><a href="Enrollment_Record.php">Enrollment</a></li>
-    </ul>
     <div class="status">
         <?php // Check if the query was successful
         $servername = "localhost";
@@ -22,61 +18,15 @@
 
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Status:  Connection failed: " . $conn->connect_error);
-        }
-        echo "Server Status: Connected successfully";
         ?>
+
+        <ul class="navigation-bar">
+    <li><a href="Student_Records.php">StudentRecord</a></li>
+    <li><a href="Course_Records.php">Course</a></li>
+    <li><a href="Instructor_Records.php">Instructor</a></li>
+    <li><a href="Enrollment_Records.php">Enrollment</a></li>
+</ul>
     </div>
-
-    <div class="card-style">
-        <h1>Add Instructor Record</h1>
-        <table style="width:40%">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-                <tr><td><label for="fname">First name:</label></td>
-                <td><input type="text" name="insfname" id="insfname" value=""></td></tr>
-                <tr><td><label for="fname">Last name:</label></td>
-                <td><input type="text" name="inslname" id="inslname" value=""></td></tr>
-                <tr><td><label for="fname">Email:</label></td>
-                <td><input type="text" name="insemail" id="insemail" value=""></td></tr>
-                <tr><td><label for="fname">Phone:</label></td>
-                <td><input type="text" name="insphone" id="insphone" value=""></td></tr> 
-                <tr><td></td><td><input type="submit" value="submit" name="addinstructor"></td></tr>
-            </form>
-        </table>
-    </div>
-    <?php 
-
-    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addinstructor']))
-    {
-        try{
-            $studenfname = $_POST['insfname'];
-            $studentlname = $_POST['inslname'];
-            $studentemail = $_POST['insemail'];
-            $studentphone = (int)$_POST['insphone'];
-            $instrucsql = "INSERT INTO instructor (FirstName,LastName,Email,Phone) 
-                                    VALUES(
-                                    '$studenfname',
-                                    '$studentlname',
-                                    '$studentemail',
-                                    $studentphone)";
-            //$studentrecord = $conn->exec($studentsql);
-            //echo  gettype($studenfname);	
-
-            if (mysqli_query($conn, $instrucsql)) {
-                echo "New record created successfully";
-            } else {
-                echo "<br>Error: " . $instrucsql . "<br>" . mysqli_error($conn);
-            }
-        }catch(PDOException $e) {
-            echo $studentrecord . "<br>" . $e->getMessage();
-        }
-        
-        
-    }?>
-
     <div class="card-style">
         <h1>Instructor Records</h1>
         <table style="width:100%">
@@ -124,7 +74,7 @@
                 }
         }
     ?>
-    <div class="card-style">
+<div class="card-style">
         <?php 
             $selecteditsql = "SELECT InstructorID, FirstName, LastName, Email  FROM instructor";
             $result = $conn->query($selecteditsql);
@@ -192,6 +142,77 @@
             }
         }
 
+        ?>
+    </div>
+    <div class="card-style">
+        <h1>Add Instructor Record</h1>
+        <table style="width:40%">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+                <tr>
+                    <td><label for="fname">First name:</label></td>
+                    <td><label for="fname">Last name:</label></td>
+                    <td><label for="fname">Email:</label></td>
+                    <td><label for="fname">Phone:</label></td>
+
+                </tr>
+                <tr>
+                    <td><input type="text" name="insfname" id="insfname" value=""></td>
+                    <td><input type="text" name="inslname" id="inslname" value=""></td>
+                    <td><input type="text" name="insemail" id="insemail" value=""></td>
+                    <td><input type="text" name="insphone" id="insphone" value=""></td>  
+                </tr>
+                <tr><td><input type="submit" value="submit" name="addinstructor"></td></tr>
+    
+            </form>
+        </table>
+    </div>
+    <?php 
+
+    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addinstructor']))
+    {
+        try{
+            $studenfname = $_POST['insfname'];
+            $studentlname = $_POST['inslname'];
+            $studentemail = $_POST['insemail'];
+            $studentphone = (int)$_POST['insphone'];
+            $instrucsql = "INSERT INTO instructor (FirstName,LastName,Email,Phone) 
+                                    VALUES(
+                                    '$studenfname',
+                                    '$studentlname',
+                                    '$studentemail',
+                                    $studentphone)";
+            //$studentrecord = $conn->exec($studentsql);
+            //echo  gettype($studenfname);	
+
+            if (mysqli_query($conn, $instrucsql)) {
+                echo "New record created successfully";
+            } else {
+                echo "<br>Error: " . $instrucsql . "<br>" . mysqli_error($conn);
+            }
+        }catch(PDOException $e) {
+            echo $studentrecord . "<br>" . $e->getMessage();
+        }
+        
+        
+    }?>
+
+   
+    
+    <div class="status">
+        <?php 
+        // Check if the query was successful
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "studentrecord";
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Status:  Connection failed: " . $conn->connect_error);
+        }
+        echo "Server Status: Connected successfully";
         ?>
     </div>
 </body>
